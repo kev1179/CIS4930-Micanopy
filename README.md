@@ -60,3 +60,5 @@ Randol - Gallery page
 Tyler - Form pages
 Maiah - About page
 Ai-Ly - Landing page
+
+To install UI components, visit https://ui.shadcn.com/docs/components and copy the install code into the terminal. Components are installed in the src/components/ui directory and can be imported into any file.
