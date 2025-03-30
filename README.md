@@ -53,12 +53,6 @@ export default tseslint.config({
 });
 ```
 
-ROLES
-
-Kevin - Timeline page
-Randol - Gallery page
-Tyler - Form pages
-Maiah - About page
-Ai-Ly - Landing page
+# Components
 
 To install UI components, visit https://ui.shadcn.com/docs/components and copy the install code into the terminal. Components are installed in the src/components/ui directory and can be imported into any file.
