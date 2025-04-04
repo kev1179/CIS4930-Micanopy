@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-amber-100 border-b border-amber-300 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-amber-100 border-b border-amber-300 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-serif">
           <Link to="/" className="text-amber-900 hover:text-amber-800">

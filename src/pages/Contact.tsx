@@ -1,9 +1,17 @@
 import { useState, FormEvent } from "react";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 function Contact() {
   const [name, setName] = useState("");
@@ -11,16 +19,33 @@ function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log({ name, email, subject, message });
+    setIsLoading(true);
+
+    try {
+      // Simulate API call with timeout
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      console.log({ name, email, subject, message });
+
+      toast.success("Message sent successfully! We'll get back to you soon.");
+
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      toast.error("Failed to send message. Please try again later.");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="bg-amber-50 min-h-screen relative">
-      <div className="absolute inset-0 opacity-5">
-        <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
-      </div>
       <div className="max-w-2xl mx-auto px-4 relative min-h-screen flex flex-col justify-center py-20">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-serif text-amber-900 mb-4">
@@ -33,9 +58,13 @@ function Contact() {
             <CardTitle className="text-2xl font-serif text-amber-900">
               Send us a message
             </CardTitle>
+            <CardDescription className="text-amber-900 font-serif">
+              We'd love to hear from you! Please fill out the form below to
+              contact us.
+            </CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleFormSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-amber-900 font-serif">
                   Name
@@ -89,8 +118,9 @@ function Contact() {
               <Button
                 type="submit"
                 className="w-full bg-amber-800 text-amber-100 hover:bg-amber-700 border border-amber-700 font-serif text-lg uppercase tracking-widest"
+                disabled={isLoading}
               >
-                Send Message
+                {isLoading ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </CardContent>

@@ -142,9 +142,6 @@ function Home() {
 
       {/* Town Stats Section with Vintage Cards */}
       <section className="py-20 bg-amber-100 relative min-h-[400px]">
-        <div className="absolute inset-0 opacity-5">
-          <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
-        </div>
         <div className="max-w-7xl mx-auto px-4 relative">
           <h2 className="text-4xl font-serif text-center mb-16">
             Town Heritage
@@ -180,7 +177,7 @@ function Home() {
       {/* Featured Attractions Section with Vintage Styling */}
       <section className="py-20 bg-amber-50 relative min-h-[600px]">
         <div className="absolute inset-0 opacity-5">
-          <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
+          <div className="h-full w-full bg-[url('/pages/images/old-paper.jpg')] bg-cover"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 relative">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">

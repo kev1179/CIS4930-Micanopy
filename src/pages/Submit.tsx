@@ -1,6 +1,12 @@
 import { useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,9 +26,6 @@ function Submit() {
 
   return (
     <div className="bg-amber-50 min-h-screen relative">
-      <div className="absolute inset-0 opacity-5">
-        <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
-      </div>
       <div className="max-w-2xl mx-auto px-4 relative min-h-screen flex flex-col justify-center py-20">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-serif text-amber-900 mb-4">
@@ -35,6 +38,10 @@ function Submit() {
             <CardTitle className="text-2xl font-serif text-amber-900">
               Share your historical photos
             </CardTitle>
+            <CardDescription className="text-amber-900 font-serif">
+              We'd love to see your photos of Micanopy! Please fill out the form
+              below to share your images with us.
+            </CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">

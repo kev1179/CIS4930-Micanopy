@@ -1,14 +1,17 @@
-import Navbar from "@/components/navbar";
 import { Outlet } from "react-router";
 import Footer from "./footer";
 
+import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/sonner";
+
 function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col w-full">
       <Navbar />
 
       <main>
         <Outlet />
+        <Toaster />
       </main>
 
       <Footer />
