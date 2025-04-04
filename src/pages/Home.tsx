@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import townPhoto from './images/town-photo.jpg';
-import museum from './images/Museum.jpg';
-import antique from './images/antique.jpg';
-import herlongMansion from './images/herlong-mansion.png';
-import paynes from './images/paynes-prarie.png';
+import { useState } from "react";
+import { Link } from "react-router";
+import townPhoto from "./images/town-photo.jpg";
+import museum from "./images/Museum.jpg";
+import antique from "./images/antique.jpg";
+import herlongMansion from "./images/herlong-mansion.png";
+import paynes from "./images/paynes-prarie.png";
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   // Town data for Micanopy
   const townData = {
@@ -15,39 +15,43 @@ function Home() {
     tagline: "Florida's Oldest Inland Town - Est. 1821",
     heroImageUrl: townPhoto,
     stats: [
-      { label: "Founded", value: "1821"},
-      { label: "Population", value: "~600"},
-      { label: "Historic District", value: "470 acres"},
-      { label: "Antique Shops", value: "12+"},
+      { label: "Founded", value: "1821" },
+      { label: "Population", value: "~600" },
+      { label: "Historic District", value: "470 acres" },
+      { label: "Antique Shops", value: "12+" },
     ],
     attractions: [
       {
         id: 1,
         name: "Herlong Mansion",
-        description: "Historic bed & breakfast showcasing early 20th century elegance and Southern charm.",
+        description:
+          "Historic bed & breakfast showcasing early 20th century elegance and Southern charm.",
         imageUrl: herlongMansion,
-        category: "landmark"
+        category: "landmark",
       },
       {
         id: 2,
         name: "Micanopy Historical Museum",
-        description: "Preserving the rich heritage of Florida's oldest inland town through artifacts and exhibits.",
+        description:
+          "Preserving the rich heritage of Florida's oldest inland town through artifacts and exhibits.",
         imageUrl: museum,
-        category: "culture"
+        category: "culture",
       },
       {
         id: 3,
         name: "Antique District",
-        description: "Browse through charming shops filled with treasures from bygone eras.",
+        description:
+          "Browse through charming shops filled with treasures from bygone eras.",
         imageUrl: antique,
-        category: "landmark"
+        category: "landmark",
       },
       {
         id: 4,
         name: "Paynes Prairie Preserve",
-        description: "A vast savanna with wild horses, bison, and abundant wildlife just minutes from town.",
+        description:
+          "A vast savanna with wild horses, bison, and abundant wildlife just minutes from town.",
         imageUrl: paynes,
-        category: "nature"
+        category: "nature",
       },
     ],
     upcomingEvents: [
@@ -55,51 +59,61 @@ function Home() {
         id: 1,
         name: "Micanopy Fall Harvest Festival",
         date: "October 2025",
-        description: "Annual celebration featuring artisans, craftspeople, music, and local food."
+        description:
+          "Annual celebration featuring artisans, craftspeople, music, and local food.",
       },
       {
         id: 2,
         name: "Historic Walking Tour",
         date: "Every Saturday, 10am",
-        description: "Guided tour through Micanopy's storied past and historic buildings."
+        description:
+          "Guided tour through Micanopy's storied past and historic buildings.",
       },
       {
         id: 3,
         name: "Antique Fair",
         date: "First Sunday monthly",
-        description: "Special displays and sales throughout the town's renowned antique district."
-      }
-    ]
+        description:
+          "Special displays and sales throughout the town's renowned antique district.",
+      },
+    ],
   };
 
   // Filter attractions based on selected category
-  const filteredAttractions = selectedCategory === 'all' 
-    ? townData.attractions 
-    : townData.attractions.filter(attraction => attraction.category === selectedCategory);
+  const filteredAttractions =
+    selectedCategory === "all"
+      ? townData.attractions
+      : townData.attractions.filter(
+          (attraction) => attraction.category === selectedCategory
+        );
 
   return (
     <div className="bg-amber-50 text-amber-900">
       {/* Hero Section with Vintage Styling */}
-      <section 
+      <section
         className="relative h-screen max-h-[800px] bg-cover bg-center bg-fixed"
         style={{ backgroundImage: `url(${townData.heroImageUrl})` }}
       >
         <div className="absolute inset-0 bg-amber-900 opacity-50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-amber-50 px-4">
           <div className="border-8 border-double border-amber-200/80 p-8 max-w-4xl mx-auto text-center bg-amber-900/60">
-            <h1 className="text-6xl font-serif mb-4 text-center">{townData.townName}</h1>
+            <h1 className="text-6xl font-serif mb-4 text-center">
+              {townData.townName}
+            </h1>
             <div className="w-40 h-1 bg-amber-200 mx-auto mb-4"></div>
-            <p className="text-2xl font-serif max-w-3xl text-center mb-4">{townData.tagline}</p>
+            <p className="text-2xl font-serif max-w-3xl text-center mb-4">
+              {townData.tagline}
+            </p>
           </div>
           <div className="flex flex-wrap justify-center gap-4 mt-12">
-            <Link 
-              to="/gallery" 
+            <Link
+              to="/gallery"
               className="px-8 py-4 bg-amber-800 text-amber-100 border border-amber-200 rounded-none hover:bg-amber-700 transition-colors text-lg font-serif uppercase tracking-widest"
             >
               Explore Gallery
             </Link>
-            <Link 
-              to="/timeline" 
+            <Link
+              to="/timeline"
               className="px-8 py-4 bg-transparent text-amber-100 border border-amber-200 rounded-none hover:bg-amber-800/50 transition-colors text-lg font-serif uppercase tracking-widest"
             >
               Town Timeline
@@ -131,15 +145,19 @@ function Home() {
           <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 relative">
-          <h2 className="text-4xl font-serif text-center mb-16">Town Heritage</h2>
+          <h2 className="text-4xl font-serif text-center mb-16">
+            Town Heritage
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {townData.stats.map((stat, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-amber-50 p-8 border border-amber-300 shadow-md hover:shadow-lg transition-shadow text-center"
               >
                 <h3 className="text-xl font-serif mb-2">{stat.label}</h3>
-                <p className="text-4xl font-serif text-amber-800">{stat.value}</p>
+                <p className="text-4xl font-serif text-amber-800">
+                  {stat.value}
+                </p>
               </div>
             ))}
           </div>
@@ -150,7 +168,8 @@ function Home() {
       <section className="py-16 bg-amber-800 text-amber-100">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <p className="text-3xl font-serif italic">
-            "Micanopy is a place where time slows down, where the past is celebrated, and where every building tells a story."
+            "Micanopy is a place where time slows down, where the past is
+            celebrated, and where every building tells a story."
           </p>
           <div className="w-16 h-1 bg-amber-200 mx-auto my-6"></div>
           <p className="text-xl">— Local Historian</p>
@@ -164,9 +183,11 @@ function Home() {
         </div>
         <div className="max-w-7xl mx-auto px-4 relative">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <h2 className="text-4xl font-serif mb-4 md:mb-0">Discover Micanopy</h2>
-            <Link 
-              to="/gallery" 
+            <h2 className="text-4xl font-serif mb-4 md:mb-0">
+              Discover Micanopy
+            </h2>
+            <Link
+              to="/gallery"
               className="text-amber-800 hover:text-amber-600 font-serif text-lg flex items-center border-b-2 border-amber-300"
             >
               View Complete Gallery <span className="ml-2">→</span>
@@ -177,41 +198,41 @@ function Home() {
           <div className="flex flex-wrap justify-center mb-12 gap-3">
             <button
               className={`px-6 py-3 font-serif text-lg border ${
-                selectedCategory === 'all' 
-                  ? 'bg-amber-800 text-amber-100 border-amber-700' 
-                  : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200'
+                selectedCategory === "all"
+                  ? "bg-amber-800 text-amber-100 border-amber-700"
+                  : "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200"
               }`}
-              onClick={() => setSelectedCategory('all')}
+              onClick={() => setSelectedCategory("all")}
             >
               All
             </button>
             <button
               className={`px-6 py-3 font-serif text-lg border ${
-                selectedCategory === 'landmark' 
-                  ? 'bg-amber-800 text-amber-100 border-amber-700' 
-                  : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200'
+                selectedCategory === "landmark"
+                  ? "bg-amber-800 text-amber-100 border-amber-700"
+                  : "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200"
               }`}
-              onClick={() => setSelectedCategory('landmark')}
+              onClick={() => setSelectedCategory("landmark")}
             >
               Landmarks
             </button>
             <button
               className={`px-6 py-3 font-serif text-lg border ${
-                selectedCategory === 'nature' 
-                  ? 'bg-amber-800 text-amber-100 border-amber-700' 
-                  : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200'
+                selectedCategory === "nature"
+                  ? "bg-amber-800 text-amber-100 border-amber-700"
+                  : "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200"
               }`}
-              onClick={() => setSelectedCategory('nature')}
+              onClick={() => setSelectedCategory("nature")}
             >
               Natural Beauty
             </button>
             <button
               className={`px-6 py-3 font-serif text-lg border ${
-                selectedCategory === 'culture' 
-                  ? 'bg-amber-800 text-amber-100 border-amber-700' 
-                  : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200'
+                selectedCategory === "culture"
+                  ? "bg-amber-800 text-amber-100 border-amber-700"
+                  : "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200"
               }`}
-              onClick={() => setSelectedCategory('culture')}
+              onClick={() => setSelectedCategory("culture")}
             >
               Cultural Heritage
             </button>
@@ -225,23 +246,31 @@ function Home() {
                 className="bg-white border border-amber-300 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
               >
                 <div className="h-60 overflow-hidden border-b border-amber-200 relative">
-                  <img 
-                    src={attraction.imageUrl} 
-                    alt={attraction.name} 
+                  <img
+                    src={attraction.imageUrl}
+                    alt={attraction.name}
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-500 sepia hover:sepia-0"
                   />
                   <div className="absolute inset-0 border-8 border-white opacity-20 pointer-events-none"></div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-serif mb-2">{attraction.name}</h3>
-                  <p className="text-amber-800 mb-4">{attraction.description}</p>
-                  <span className={`inline-block px-4 py-1 text-sm border ${
-                    attraction.category === 'landmark' ? 'border-amber-300 bg-amber-100 text-amber-800' :
-                    attraction.category === 'nature' ? 'border-green-300 bg-green-50 text-green-800' :
-                    attraction.category === 'food' ? 'border-red-300 bg-red-50 text-red-800' :
-                    'border-purple-300 bg-purple-50 text-purple-800'
-                  }`}>
-                    {attraction.category.charAt(0).toUpperCase() + attraction.category.slice(1)}
+                  <p className="text-amber-800 mb-4">
+                    {attraction.description}
+                  </p>
+                  <span
+                    className={`inline-block px-4 py-1 text-sm border ${
+                      attraction.category === "landmark"
+                        ? "border-amber-300 bg-amber-100 text-amber-800"
+                        : attraction.category === "nature"
+                        ? "border-green-300 bg-green-50 text-green-800"
+                        : attraction.category === "food"
+                        ? "border-red-300 bg-red-50 text-red-800"
+                        : "border-purple-300 bg-purple-50 text-purple-800"
+                    }`}
+                  >
+                    {attraction.category.charAt(0).toUpperCase() +
+                      attraction.category.slice(1)}
                   </span>
                 </div>
               </div>
@@ -266,7 +295,7 @@ function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {townData.upcomingEvents.map((event) => (
-              <div 
+              <div
                 key={event.id}
                 className="bg-amber-900 p-8 border border-amber-700 shadow-md hover:shadow-lg transition-all"
               >
@@ -279,8 +308,8 @@ function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Link 
-              to="/timeline" 
+            <Link
+              to="/timeline"
               className="inline-block px-8 py-4 bg-transparent text-amber-100 border border-amber-200 hover:bg-amber-700 transition-colors text-lg font-serif uppercase tracking-wider"
             >
               View All Events
@@ -290,17 +319,23 @@ function Home() {
       </section>
 
       {/* CTA Section with Vintage Photo Background */}
-      <section className="py-24 bg-cover bg-center relative" style={{ backgroundImage: "url('/images/micanopy-street.jpg')" }}>
+      <section
+        className="py-24 bg-cover bg-center relative"
+        style={{ backgroundImage: "url('/images/micanopy-street.jpg')" }}
+      >
         <div className="absolute inset-0 bg-amber-900 opacity-70"></div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center text-amber-100">
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Share Your Micanopy Memories</h2>
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">
+            Share Your Micanopy Memories
+          </h2>
           <div className="w-24 h-1 bg-amber-200 mx-auto mb-6"></div>
           <p className="text-xl mb-10 max-w-3xl mx-auto">
-            Do you have historical photographs, family stories, or memories about our town? 
-            Help us preserve Micanopy's rich heritage by contributing to our gallery.
+            Do you have historical photographs, family stories, or memories
+            about our town? Help us preserve Micanopy's rich heritage by
+            contributing to our gallery.
           </p>
-          <Link 
-            to="/submit" 
+          <Link
+            to="/submit"
             className="inline-block px-8 py-4 bg-amber-100 text-amber-900 border border-amber-200 hover:bg-white transition-colors text-lg font-serif uppercase tracking-wider"
           >
             Submit Your Content
@@ -317,7 +352,8 @@ function Home() {
           <h2 className="text-4xl font-serif mb-4">Stay Connected</h2>
           <div className="w-24 h-1 bg-amber-800 mx-auto mb-6"></div>
           <p className="text-xl text-amber-800 mb-10">
-            Subscribe to our town gazette to receive updates about events, historical findings, and community news.
+            Subscribe to our town gazette to receive updates about events,
+            historical findings, and community news.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
             <input
