@@ -8,14 +8,16 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
-    return location.pathname === path ? "active" : "";
+    return location.pathname === path
+      ? "text-amber-800 font-bold"
+      : "text-amber-900";
   };
 
   return (
-    <header className="border-b bg-white">
+    <header className="bg-amber-100 border-b border-amber-300 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">
-          <Link to="/" className="hover:text-primary">
+        <h1 className="text-2xl font-serif">
+          <Link to="/" className="text-amber-900 hover:text-amber-800">
             Micanopy Gallery
           </Link>
         </h1>
@@ -23,14 +25,19 @@ const Navbar = () => {
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
             <li>
-              <Link to="/" className={`hover:text-primary ${isActive("/")}`}>
+              <Link
+                to="/"
+                className={`hover:text-amber-800 font-serif ${isActive("/")}`}
+              >
                 Home
               </Link>
             </li>
             <li>
               <Link
                 to="/gallery"
-                className={`hover:text-primary ${isActive("/gallery")}`}
+                className={`hover:text-amber-800 font-serif ${isActive(
+                  "/gallery"
+                )}`}
               >
                 Gallery
               </Link>
@@ -38,7 +45,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/timeline"
-                className={`hover:text-primary ${isActive("/timeline")}`}
+                className={`hover:text-amber-800 font-serif ${isActive(
+                  "/timeline"
+                )}`}
               >
                 Timeline
               </Link>
@@ -46,7 +55,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/about"
-                className={`hover:text-primary ${isActive("/about")}`}
+                className={`hover:text-amber-800 font-serif ${isActive(
+                  "/about"
+                )}`}
               >
                 About
               </Link>
@@ -54,7 +65,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/contact"
-                className={`hover:text-primary ${isActive("/contact")}`}
+                className={`hover:text-amber-800 font-serif ${isActive(
+                  "/contact"
+                )}`}
               >
                 Contact
               </Link>
@@ -62,7 +75,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/submit"
-                className={`hover:text-primary ${isActive("/submit")}`}
+                className={`hover:text-amber-800 font-serif ${isActive(
+                  "/submit"
+                )}`}
               >
                 Submit Photos
               </Link>
@@ -72,7 +87,7 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <Button
-          className="md:hidden"
+          className="md:hidden bg-amber-800 text-amber-100 hover:bg-amber-700"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
           variant="ghost"
@@ -84,12 +99,14 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t">
+        <div className="md:hidden border-t border-amber-300 bg-amber-100">
           <ul className="container mx-auto px-4 py-2">
             <li className="py-2">
               <Link
                 to="/"
-                className={`block hover:text-primary ${isActive("/")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/"
+                )}`}
               >
                 Home
               </Link>
@@ -97,7 +114,9 @@ const Navbar = () => {
             <li className="py-2">
               <Link
                 to="/gallery"
-                className={`block hover:text-primary ${isActive("/gallery")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/gallery"
+                )}`}
               >
                 Gallery
               </Link>
@@ -105,7 +124,9 @@ const Navbar = () => {
             <li className="py-2">
               <Link
                 to="/timeline"
-                className={`block hover:text-primary ${isActive("/timeline")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/timeline"
+                )}`}
               >
                 Timeline
               </Link>
@@ -113,7 +134,9 @@ const Navbar = () => {
             <li className="py-2">
               <Link
                 to="/about"
-                className={`block hover:text-primary ${isActive("/about")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/about"
+                )}`}
               >
                 About
               </Link>
@@ -121,7 +144,9 @@ const Navbar = () => {
             <li className="py-2">
               <Link
                 to="/contact"
-                className={`block hover:text-primary ${isActive("/contact")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/contact"
+                )}`}
               >
                 Contact
               </Link>
@@ -129,7 +154,9 @@ const Navbar = () => {
             <li className="py-2">
               <Link
                 to="/submit"
-                className={`block hover:text-primary ${isActive("/submit")}`}
+                className={`block hover:text-amber-800 font-serif ${isActive(
+                  "/submit"
+                )}`}
               >
                 Submit Photos
               </Link>

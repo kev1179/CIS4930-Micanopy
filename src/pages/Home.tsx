@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import townPhoto from "./images/town-photo.jpg";
-import museum from "./images/Museum.jpg";
-import antique from "./images/antique.jpg";
-import herlongMansion from "./images/herlong-mansion.png";
-import paynes from "./images/paynes-prarie.png";
+
+import townPhoto from "@/pages/images/town-photo.jpg";
+import museum from "@/pages/images/Museum.jpg";
+import antique from "@/pages/images/antique.jpg";
+import herlongMansion from "@/pages/images/herlong-mansion.png";
+import paynes from "@/pages/images/paynes-prarie.png";
 
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -88,7 +89,7 @@ function Home() {
         );
 
   return (
-    <div className="bg-amber-50 text-amber-900">
+    <div className="bg-amber-50 text-amber-900 min-h-screen">
       {/* Hero Section with Vintage Styling */}
       <section
         className="relative h-screen max-h-[800px] bg-cover bg-center bg-fixed"
@@ -140,7 +141,7 @@ function Home() {
       </div>
 
       {/* Town Stats Section with Vintage Cards */}
-      <section className="py-20 bg-amber-100 relative">
+      <section className="py-20 bg-amber-100 relative min-h-[400px]">
         <div className="absolute inset-0 opacity-5">
           <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
         </div>
@@ -177,7 +178,7 @@ function Home() {
       </section>
 
       {/* Featured Attractions Section with Vintage Styling */}
-      <section className="py-20 bg-amber-50 relative">
+      <section className="py-20 bg-amber-50 relative min-h-[600px]">
         <div className="absolute inset-0 opacity-5">
           <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
         </div>
