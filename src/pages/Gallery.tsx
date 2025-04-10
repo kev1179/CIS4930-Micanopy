@@ -16,7 +16,7 @@ function Gallery() {
             <img
               src={image.src}
               alt={`Gallery image ${image.id}`}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 object-contain bg-white"
             />
             <div className="p-4">
               <p className="text-sm text-amber-800 font-serif">
