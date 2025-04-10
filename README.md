@@ -29,7 +29,7 @@ A web application for showcasing and managing a photography gallery for the town
 1. Clone the repository
 
    ```
-   git clone https://github.com/your-username/micanopy-gallery.git
+   git clone https://github.com/kev1179/CIS4930-Micanopy.git
    cd micanopy-gallery
    ```
 
