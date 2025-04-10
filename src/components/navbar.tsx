@@ -13,6 +13,10 @@ const Navbar = () => {
       : "text-amber-900";
   };
 
+  const handleMobileClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-amber-100 border-b border-amber-300 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -107,6 +111,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/"
                 )}`}
+                onClick={handleMobileClick}
               >
                 Home
               </Link>
@@ -117,6 +122,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/gallery"
                 )}`}
+                onClick={handleMobileClick}
               >
                 Gallery
               </Link>
@@ -127,6 +133,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/timeline"
                 )}`}
+                onClick={handleMobileClick}
               >
                 Timeline
               </Link>
@@ -137,6 +144,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/about"
                 )}`}
+                onClick={handleMobileClick}
               >
                 About
               </Link>
@@ -147,6 +155,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/contact"
                 )}`}
+                onClick={handleMobileClick}
               >
                 Contact
               </Link>
@@ -157,6 +166,7 @@ const Navbar = () => {
                 className={`block hover:text-amber-800 font-serif ${isActive(
                   "/submit"
                 )}`}
+                onClick={handleMobileClick}
               >
                 Submit Photos
               </Link>
