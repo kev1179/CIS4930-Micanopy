@@ -14,21 +14,65 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
 function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      errors.name = "Name is required";
+    }
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    if (!formData.subject.trim()) {
+      errors.subject = "Subject is required";
+    }
+    if (!formData.message.trim()) {
+      errors.message = "Message is required";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
 
     try {
       // Simulate API call with timeout
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log({ name, email, subject, message });
+      console.log(formData);
 
       toast.success("Message sent successfully! We'll get back to you soon.", {
         className:
@@ -36,10 +80,13 @@ function Contact() {
         duration: 4000,
       });
 
-      setName("");
-      setEmail("");
-      setSubject("");
-      setMessage("");
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      setFormErrors({});
     } catch (error) {
       toast.error("Failed to send message. Please try again later.", {
         className:
@@ -77,55 +124,73 @@ function Contact() {
           </CardHeader>
           <CardContent className="pt-6">
             <form onSubmit={handleFormSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-amber-900 font-serif">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-amber-900 font-serif">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-amber-900 font-serif">
+                    Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
+                      formErrors.name ? "border-red-500" : ""
+                    }`}
+                  />
+                  {formErrors.name && (
+                    <p className="text-red-500 text-sm">{formErrors.name}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-amber-900 font-serif">
+                    Email <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
+                      formErrors.email ? "border-red-500" : ""
+                    }`}
+                  />
+                  {formErrors.email && (
+                    <p className="text-red-500 text-sm">{formErrors.email}</p>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="subject" className="text-amber-900 font-serif">
-                  Subject
+                  Subject <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="subject"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                  required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
+                  value={formData.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
+                    formErrors.subject ? "border-red-500" : ""
+                  }`}
                 />
+                {formErrors.subject && (
+                  <p className="text-red-500 text-sm">{formErrors.subject}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message" className="text-amber-900 font-serif">
-                  Message
+                  Message <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
                   id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required
+                  value={formData.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
                   rows={5}
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
+                  className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
+                    formErrors.message ? "border-red-500" : ""
+                  }`}
                 />
+                {formErrors.message && (
+                  <p className="text-red-500 text-sm">{formErrors.message}</p>
+                )}
               </div>
               <Button
                 type="submit"

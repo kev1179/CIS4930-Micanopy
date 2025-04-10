@@ -1,4 +1,4 @@
-import { useState, FormEvent, useRef } from "react";
+import { useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -32,14 +32,16 @@ function Submit() {
     files: null,
   });
   const [isLoading, setIsLoading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (
     field: keyof FormData,
     value: string | FileList | null
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value === null ? "" : value,
+    }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +71,7 @@ function Submit() {
         }
       );
 
+      // Reset form with empty strings instead of null
       setFormData({
         name: "",
         email: "",
@@ -153,10 +156,8 @@ function Submit() {
                 </Label>
                 <Input
                   id="name"
-                  placeholder="e.g. 'John Doe'"
-                  value={formData.name}
+                  value={formData.name || ""}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  required
                   className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
                 {formErrors.name && (
@@ -169,10 +170,9 @@ function Submit() {
                 </Label>
                 <Input
                   id="email"
-                  placeholder="e.g. 'john.doe@example.com'"
-                  value={formData.email}
+                  type="email"
+                  value={formData.email || ""}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  required
                   className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
                 {formErrors.email && (
@@ -191,10 +191,8 @@ function Submit() {
               </Label>
               <Input
                 id="title"
-                placeholder="e.g. 'Old Micanopy School'"
-                value={formData.title}
+                value={formData.title || ""}
                 onChange={(e) => handleInputChange("title", e.target.value)}
-                required
                 className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
               />
               {formErrors.title && (
@@ -207,9 +205,7 @@ function Submit() {
               </Label>
               <Input
                 id="year"
-                type="number"
-                placeholder="YYYY"
-                value={formData.year}
+                value={formData.year || ""}
                 onChange={(e) => handleInputChange("year", e.target.value)}
                 className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
               />
@@ -223,12 +219,10 @@ function Submit() {
               </Label>
               <Textarea
                 id="description"
-                placeholder="e.g. 'This photo was taken at the old Micanopy School in 1950.'"
-                value={formData.description}
+                value={formData.description || ""}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }
-                required
                 rows={5}
                 className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
               />
@@ -251,7 +245,6 @@ function Submit() {
                 multiple
                 onChange={handleFileChange}
                 className="cursor-pointer bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
-                required
               />
               <p className="text-sm text-amber-700 mt-1 font-serif">
                 Maximum 5 photos. Acceptable formats: JPG, PNG
