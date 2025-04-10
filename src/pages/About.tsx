@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import coverPhoto from "@/pages/images/about-cover.jpg";
-import townPhoto from "@/pages/images/town-photo.jpg";
-import herlongMansion from "@/pages/images/herlong-mansion.png";
+import coverPhoto from "@/assets/images/about-cover.jpg";
+import townPhoto from "@/assets/images/town-photo.jpg";
+import herlongMansion from "@/assets/images/herlong-mansion.png";
 
 const About = () => {
   return (

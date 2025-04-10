@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 function Submit() {
   const [name, setName] = useState("");
@@ -18,16 +19,52 @@ function Submit() {
   const [description, setDescription] = useState("");
   const [year, setYear] = useState("");
   const [files, setFiles] = useState<FileList | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log({ name, email, title, description, year, files });
+    setIsLoading(true);
+
+    try {
+      // Simulate API call with timeout
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      console.log({ name, email, title, description, year, files });
+
+      toast.success(
+        "Photos submitted successfully! Thank you for your contribution.",
+        {
+          className:
+            "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+          duration: 4000,
+        }
+      );
+
+      setName("");
+      setEmail("");
+      setTitle("");
+      setDescription("");
+      setYear("");
+      setFiles(null);
+    } catch (error) {
+      toast.error("Failed to submit photos. Please try again later.", {
+        className:
+          "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+        duration: 4000,
+      });
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="bg-amber-50 min-h-screen relative">
-      <div className="max-w-2xl mx-auto px-4 relative min-h-screen flex flex-col justify-center py-20">
-        <div className="text-center mb-12">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="h-full w-full bg-[linear-gradient(45deg,#f3d5b5_10%,transparent_10%,transparent_90%,#f3d5b5_90%)] bg-[size:20px_20px]"></div>
+      </div>
+      <div className="max-w-2xl mx-auto px-4 relative py-20">
+        <div className="text-center my-12">
           <h1 className="text-4xl font-serif text-amber-900 mb-4">
             Submit Photos
           </h1>
@@ -45,30 +82,32 @@ function Submit() {
           </CardHeader>
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-amber-900 font-serif">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-amber-900 font-serif">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-amber-900 font-serif">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-amber-900 font-serif">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="title" className="text-amber-900 font-serif">
@@ -128,8 +167,9 @@ function Submit() {
               <Button
                 type="submit"
                 className="w-full bg-amber-800 text-amber-100 hover:bg-amber-700 border border-amber-700 font-serif text-lg uppercase tracking-widest"
+                disabled={isLoading}
               >
-                Submit Photos
+                {isLoading ? "Submitting..." : "Submit Photos"}
               </Button>
             </form>
           </CardContent>

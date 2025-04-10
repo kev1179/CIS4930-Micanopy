@@ -30,14 +30,22 @@ function Contact() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log({ name, email, subject, message });
 
-      toast.success("Message sent successfully! We'll get back to you soon.");
+      toast.success("Message sent successfully! We'll get back to you soon.", {
+        className:
+          "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+        duration: 4000,
+      });
 
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
     } catch (error) {
-      toast.error("Failed to send message. Please try again later.");
+      toast.error("Failed to send message. Please try again later.", {
+        className:
+          "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+        duration: 4000,
+      });
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -46,8 +54,12 @@ function Contact() {
 
   return (
     <div className="bg-amber-50 min-h-screen relative">
-      <div className="max-w-2xl mx-auto px-4 relative min-h-screen flex flex-col justify-center py-20">
-        <div className="text-center mb-12">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="h-full w-full bg-[linear-gradient(45deg,#f3d5b5_10%,transparent_10%,transparent_90%,#f3d5b5_90%)] bg-[size:20px_20px]"></div>
+      </div>
+      <div className="max-w-2xl mx-auto px-4 relative py-20">
+        <div className="text-center my-12">
           <h1 className="text-4xl font-serif text-amber-900 mb-4">
             Contact Us
           </h1>
