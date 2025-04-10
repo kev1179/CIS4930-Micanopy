@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
 
-import townPhoto from "@/pages/images/town-photo.jpg";
-import museum from "@/pages/images/Museum.jpg";
-import antique from "@/pages/images/antique.jpg";
-import herlongMansion from "@/pages/images/herlong-mansion.png";
-import paynes from "@/pages/images/paynes-prarie.png";
+import townPhoto from "@/assets/images/town-photo.jpg";
+import museum from "@/assets/images/Museum.jpg";
+import antique from "@/assets/images/antique.jpg";
+import herlongMansion from "@/assets/images/herlong-mansion.png";
+import paynes from "@/assets/images/paynes-prarie.png";
 
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");

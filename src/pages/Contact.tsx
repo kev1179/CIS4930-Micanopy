@@ -53,7 +53,7 @@ function Contact() {
           </h1>
           <div className="w-24 h-1 bg-amber-800 mx-auto"></div>
         </div>
-        <Card className="bg-amber-100 border-amber-300 shadow-lg">
+        <Card className="bg-amber-100 border-amber-300 shadow-lg rounded-none">
           <CardHeader className="border-b border-amber-300">
             <CardTitle className="text-2xl font-serif text-amber-900">
               Send us a message
@@ -74,7 +74,7 @@ function Contact() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -87,7 +87,7 @@ function Contact() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -99,7 +99,7 @@ function Contact() {
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -112,7 +112,7 @@ function Contact() {
                   onChange={(e) => setMessage(e.target.value)}
                   required
                   rows={5}
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <Button

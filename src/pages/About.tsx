@@ -5,10 +5,9 @@ import herlongMansion from "@/pages/images/herlong-mansion.png";
 
 const About = () => {
   return (
-    <div className="flex flex-col items-center">
-      {/* Hero Section with Cover Image */}
+    <div className="flex flex-col items-center bg-amber-50 min-h-screen">
       <section
-        className="relative w-full h-[400px] bg-cover bg-center"
+        className="relative w-full h-[500px] bg-cover bg-center pt-24"
         style={{ backgroundImage: `url(${coverPhoto})` }}
       >
         <div className="absolute inset-0 bg-amber-900 opacity-50"></div>
@@ -32,11 +31,9 @@ const About = () => {
           </p>
         </div>
 
-        {/* Main Content */}
         <div className="w-full max-w-4xl grid gap-12">
-          {/* Our Story */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-2 bg-amber-50/50 border-amber-200">
+            <Card className="md:col-span-2 bg-amber-100 border-amber-200 rounded-none">
               <CardHeader>
                 <CardTitle className="text-2xl font-serif text-amber-900">
                   Our Story
@@ -44,7 +41,7 @@ const About = () => {
               </CardHeader>
               <CardContent className="text-amber-800">
                 <p>
-                  Founded in 2024, Micanopy Gallery began as a collaborative
+                  Founded in 2025, Micanopy Gallery began as a collaborative
                   project to ensure Micanopy's historical legacy remains
                   accessible for future generations. From antique shops to
                   historic buildings, from family stories to community
@@ -53,7 +50,7 @@ const About = () => {
                 </p>
               </CardContent>
             </Card>
-            <div className="relative h-[250px] md:h-full overflow-hidden rounded-xl border-8 border-double border-amber-200/80">
+            <div className="relative h-[250px] md:h-full overflow-hidden border-8 border-double border-amber-200/80">
               <img
                 src={townPhoto}
                 alt="Historic Micanopy"
@@ -64,7 +61,7 @@ const About = () => {
 
           {/* About Micanopy */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-2 bg-amber-50/50 border-amber-200">
+            <Card className="md:col-span-2 bg-amber-100 border-amber-200 rounded-none">
               <CardHeader>
                 <CardTitle className="text-2xl font-serif text-amber-900">
                   About Micanopy
@@ -81,7 +78,7 @@ const About = () => {
                 </p>
               </CardContent>
             </Card>
-            <div className="relative h-[250px] md:h-full overflow-hidden rounded-xl border-8 border-double border-amber-200/80">
+            <div className="relative h-[250px] md:h-full overflow-hidden border-8 border-double border-amber-200/80">
               <img
                 src={herlongMansion}
                 alt="Herlong Mansion"
@@ -92,7 +89,7 @@ const About = () => {
 
           {/* Community Impact */}
           <section>
-            <Card className="bg-amber-50/50 border-amber-200">
+            <Card className="bg-amber-100 border-amber-200 rounded-none">
               <CardHeader>
                 <CardTitle className="text-2xl font-serif text-amber-900">
                   Community Impact
@@ -121,7 +118,7 @@ const About = () => {
 
           {/* Our Team */}
           <section>
-            <Card className="bg-amber-50/50 border-amber-200">
+            <Card className="bg-amber-100 border-amber-200 rounded-none">
               <CardHeader>
                 <CardTitle className="text-2xl font-serif text-amber-900">
                   Our Team
@@ -130,35 +127,35 @@ const About = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 justify-items-center">
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 rounded-full mb-4 mx-auto"></div>
+                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Randol Recio
                     </h3>
                     <p className="text-amber-800">Software Engineer</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 rounded-full mb-4 mx-auto"></div>
+                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Tyler Landtroop
                     </h3>
                     <p className="text-amber-800">Software Engineer</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 rounded-full mb-4 mx-auto"></div>
+                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Ai-Ly Mai
                     </h3>
                     <p className="text-amber-800">Software Engineer</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 rounded-full mb-4 mx-auto"></div>
+                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Maiah Jaffa
                     </h3>
                     <p className="text-amber-800">Software Engineer</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 rounded-full mb-4 mx-auto"></div>
+                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Kevin Mosley
                     </h3>

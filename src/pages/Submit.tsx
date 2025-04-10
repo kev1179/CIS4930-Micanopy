@@ -33,7 +33,7 @@ function Submit() {
           </h1>
           <div className="w-24 h-1 bg-amber-800 mx-auto"></div>
         </div>
-        <Card className="bg-amber-100 border-amber-300 shadow-lg">
+        <Card className="bg-amber-100 border-amber-300 shadow-lg rounded-none">
           <CardHeader className="border-b border-amber-300">
             <CardTitle className="text-2xl font-serif text-amber-900">
               Share your historical photos
@@ -54,7 +54,7 @@ function Submit() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -67,7 +67,7 @@ function Submit() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -79,7 +79,7 @@ function Submit() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -90,7 +90,7 @@ function Submit() {
                   id="year"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -106,7 +106,7 @@ function Submit() {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   rows={5}
-                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                 />
               </div>
               <div className="space-y-2">
@@ -118,7 +118,7 @@ function Submit() {
                   type="file"
                   multiple
                   onChange={(e) => setFiles(e.target.files)}
-                  className="cursor-pointer bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                  className="cursor-pointer bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none"
                   required
                 />
                 <p className="text-sm text-amber-700 mt-1 font-serif">
