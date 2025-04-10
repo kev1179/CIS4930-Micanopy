@@ -3,6 +3,8 @@ import coverPhoto from "@/assets/images/about-cover.jpg";
 import townPhoto from "@/assets/images/town-photo.jpg";
 import herlongMansion from "@/assets/images/herlong-mansion.png";
 
+import tyler from "@/assets/headshots/tylerlandtroop.jpeg";
+
 const About = () => {
   return (
     <div className="flex flex-col items-center bg-amber-50 min-h-screen">
@@ -134,7 +136,11 @@ const About = () => {
                     <p className="text-amber-800">Software Engineer</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
+                    <img
+                      src={tyler}
+                      alt="Tyler Landtroop"
+                      className="w-32 h-32 mb-4 mx-auto rounded-full"
+                    />
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Tyler Landtroop
                     </h3>
