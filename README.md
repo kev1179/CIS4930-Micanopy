@@ -44,6 +44,11 @@ A web application for showcasing and managing a photography gallery for the town
    npm run dev
    ```
 
+4. Deployment
+```
+docker compose up
+```
+Then go to http://localhost:8080 in your browser to make sure it is working correctly. This will behave the same way it will behave in production assuming consistent database schema.
 ## Project Structure
 
 - `src/components`: Reusable UI components
