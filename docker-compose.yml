@@ -1,17 +1,16 @@
-version: "3.9"
-
 services:
-  #We will put our code for building the backend here
-  # backend:
-  #   build:
-  #     context: ./api
-  #     dockerfile: Dockerfile
-  #   container_name: micanopy-backend
-  #   ports:
-  #     - "5000:5000"
-  #   env_file:
-  #     - prod.env
-  #   image: backend_image
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: micanopy-backend
+    ports:
+      - "3002:3001"
+    env_file:
+      - server/.env
+    image: micanopy-backend
+    networks:
+      - micanopy-network
 
   frontend:
     build:
@@ -20,6 +19,12 @@ services:
     container_name: micanopy-frontend
     ports:
       - "8080:80"
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
     image: frontend_image
+    networks:
+      - micanopy-network
+
+networks:
+  micanopy-network:
+    driver: bridge

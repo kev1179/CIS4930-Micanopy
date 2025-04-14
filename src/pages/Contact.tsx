@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import { submitContactForm } from "@/lib/api";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -70,9 +71,7 @@ function Contact() {
     setIsLoading(true);
 
     try {
-      // Simulate API call with timeout
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log(formData);
+      await submitContactForm(formData);
 
       toast.success("Message sent successfully! We'll get back to you soon.", {
         className:
