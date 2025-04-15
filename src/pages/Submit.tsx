@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import axios from 'axios';
 
 type FormData = {
   name: string;
@@ -58,9 +59,13 @@ function Submit() {
     setIsLoading(true);
 
     try {
-      // Simulate API call with timeout
-      await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log(formData);
+      await axios.post('/api/upload/uploadPhotos',
+        formData,
+        {        headers: {
+          'Content-Type': 'multipart/form-data',
+        }}
+      );
 
       toast.success(
         "Photos submitted successfully! Thank you for your contribution.",

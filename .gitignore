@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 *.sh
 *.tar
+*.env
+uploads
+pending

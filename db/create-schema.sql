@@ -1,0 +1,19 @@
+CREATE TABLE gallery_entry (
+    ID BIGINT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    Year VARCHAR(5) NOT NULL, 
+    Description TEXT,
+    Photos TEXT
+);
+
+CREATE TABLE pending(
+    ID BIGINT PRIMARY KEY,
+    FOREIGN KEY (ID) REFERENCES gallery_entry(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE accepted(
+    ID BIGINT PRIMARY KEY,
+    FOREIGN KEY (ID) REFERENCES gallery_entry(ID) ON DELETE CASCADE
+);
