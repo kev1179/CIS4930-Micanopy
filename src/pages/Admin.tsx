@@ -22,7 +22,7 @@ const Images: React.FC<ImagesProps> = ({sources}) =>
 
     return(
         urls.map((url) => (
-            <img src ={`http://localhost:3001/pending/${url}`} style={{marginTop: "5px"}} width="150px" height="150px"></img>
+            <img src ={`/pending/${url}`} style={{marginTop: "5px"}} width="150px" height="150px"></img>
         ))
     )
 }
