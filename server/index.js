@@ -16,7 +16,8 @@ app.use("/contact", contactRoutes);
 app.use("/upload", uploadRoutes);
 
 
-app.use('/uploads', express.static(path.join(process.env.UPLOADS_FILEPATH)));
+app.use('/pending', express.static(path.join(process.env.PENDING_FILEPATH)));
+app.use('/approve', express.static(path.join(process.env.UPLOADS_FILEPATH)));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -6,6 +6,7 @@ import Timeline from "./pages/Timeline";
 import Contact from "./pages/Contact";
 import Submit from "./pages/Submit";
 import About from "./pages/About";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="submit" element={<Submit />} />
+        <Route path="admin" element={<Admin />} />
       </Route>
     </Routes>
   );

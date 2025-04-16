@@ -71,7 +71,6 @@ router.post("/uploadPhotos", upload.any("files", 5), async (req, res) => {
     const files = req.files;
     let photoNames = [];
 
-    console.log(files);
     for(let i = 0; i < files.length; i++)
         photoNames.push(files[i].originalname);
 
@@ -197,6 +196,7 @@ router.get("/getPendingIDs", async (req, res) => {
   }
 });
 
+
 router.get("/getAcceptedIDs", async (req, res) => {
   try {
 
@@ -209,6 +209,42 @@ router.get("/getAcceptedIDs", async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: "Failed to get ID's" });
+  }
+});
+
+router.get("/getPendingInfo", async (req, res) => {
+  try {
+
+    const [getPendingData] = await Promise.all([
+      pool.query(`SELECT gallery_entry.ID, gallery_entry.Name, gallery_entry.Email, gallery_entry.Title, gallery_entry.Year, gallery_entry.Description, gallery_entry.Photos
+        FROM gallery_entry 
+        INNER JOIN pending ON gallery_entry.ID=pending.ID`),
+    ]);
+
+
+    res.json({
+      pendingImages: getPendingData[0]  
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to get info" });
+  }
+});
+
+router.get("/getApprovedInfo", async (req, res) => {
+  try {
+
+    const [getPendingData] = await Promise.all([
+      pool.query(`SELECT gallery_entry.ID, gallery_entry.Name, gallery_entry.Email, gallery_entry.Title, gallery_entry.Year, gallery_entry.Description, gallery_entry.Photos
+        FROM gallery_entry 
+        INNER JOIN accepted ON gallery_entry.ID=accepted.ID`),
+    ]);
+
+
+    res.json({
+      acceptedImages: getPendingData[0]  
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to get info" });
   }
 });
 

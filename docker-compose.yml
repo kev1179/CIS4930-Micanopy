@@ -5,10 +5,13 @@ services:
       dockerfile: Dockerfile
     container_name: micanopy-backend
     ports:
-      - "3002:3001"
+      - "3001:3001"
+    volumes:
+      - pending:/pending
+      - uploads:/uploads
     env_file:
-      - server/.env
-    image: micanopy-backend
+      - prod.env
+    image: backend_image
     networks:
       - micanopy-network
 
@@ -28,3 +31,7 @@ services:
 networks:
   micanopy-network:
     driver: bridge
+
+volumes:
+  pending:
+  uploads:
