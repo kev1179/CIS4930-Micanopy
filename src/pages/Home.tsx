@@ -401,35 +401,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter Section with Vintage Paper Background */}
-      <section className="py-20 bg-amber-50 relative" data-aos="fade-up">
-        <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[url('/images/old-paper.jpg')] bg-cover"></div>
-        </div>
-        <div className="max-w-4xl mx-auto px-4 text-center relative">
-          <h2 className="text-4xl font-serif mb-4">Stay Connected</h2>
-          <div className="w-24 h-1 bg-amber-800 mx-auto mb-6"></div>
-          <p className="text-xl text-amber-800 mb-10">
-            Subscribe to our town gazette to receive updates about events,
-            historical findings, and community news.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              className="flex-grow px-5 py-4 bg-amber-50 border-2 border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-amber-900 shadow-inner"
-              style={{ backgroundImage: "url('/images/old-paper.jpg')", backgroundBlendMode: "overlay", backgroundSize: "cover" }}
-            />
-            <button className="px-8 py-4 bg-amber-800 text-amber-100 border-2 border-double border-amber-700 hover:bg-amber-700 transition-colors font-serif uppercase tracking-wider">
-              Subscribe
-            </button>
-          </div>
-          <p className="mt-4 text-amber-700 text-sm font-serif">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
-        </div>
-      </section>
-
       {/* Vintage Footer Decoration */}
       <div className="h-16 bg-amber-800 flex items-center justify-center">
         <VintageSeparator />
