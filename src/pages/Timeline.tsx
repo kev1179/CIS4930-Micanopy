@@ -1,402 +1,178 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; 
+
+const timelineEvents = [
+  { year: "1539", title: "Micanopy is Discovered", description: "Spanish explorers find a village in modern day Micanopy inhabited by the Potano tribe." },
+  { year: "1821", title: "Micanopy is Founded", description: "Micanopy became the first US town formed in the newly acquired territory of Florida." },
+  { year: "1835", title: "Second Seminole War", description: "Fort Defiance and Fort Micanopy became major strategic objectives of the Second Seminole War and many bloody battles occured in the region." },
+  { year: "1883", title: "Micanopy gets a Railroad", description: "Florida Southern Railway built a railroad connecting Micanopy to the nearby city Ocala." },
+  { year: "1920", title: "Cars come to Micanopy", description: "The Micanopy Causeway was built which allowed cars to cross Paynes Prairie for the first time." },
+  { year: "1930", title: "Montgomery Mansion Burns Down", description: "The historic Montgomery home, one of the finest residences in Micanopy surrounded by orange groves, was destroyed by fire." },
+  { year: "1950s", title: "Railroad Service Ends", description: "The Thrasher Warehouse, built in 1896, was served by a branch of the Atlantic Coast Line Railroad until the 1950s when rail service to Micanopy ended." },
+  { year: "1983", title: "Historic District Created", description: "The downtown Micanopy Historic District was listed on the National Register of Historic Places, recognizing the town's historical significance." },
+
+  { year: "1991", title: "Hollywood Comes to Town", description: "The movie \"Doc Hollywood\" starring Michael J. Fox was filmed in Micanopy, bringing national attention to the charming small town.", hidden: true },
+  { year: "2021", title: "Bicentennial Celebration", description: "Micanopy celebrated its 200th anniversary as Florida's oldest inland town that has been continuously inhabited.", hidden: true },
+  { year: "2023", title: "Recognition as a Top Historic Town", description: "Micanopy was recognized as one of America's Top 10 Historic Small Towns, highlighting its preservation of Old Florida charm and character.", hidden: true },
+  { year: "October 2024", title: "Annual Fall Festival", description: "Micanopy hosted its annual Fall Festival featuring over 200 vendors offering arts, crafts, antiques, plants, and foods, attracting thousands of visitors to the historic town.", hidden: true },
+  { year: "2024", title: "Museum Expansion", description: "The Micanopy Historical Society Museum expanded its collection with new exhibits showcasing artifacts from local Native tribes and significant events from the town's rich past.", hidden: true },
+  { year: "2025", title: "Preservation Initiative", description: "The town launched a comprehensive initiative to preserve its historic buildings and enhance the downtown area while maintaining its distinctive Old Florida atmosphere and charm.", hidden: true },
+];
+
+const annualEvents = [
+    { month: "October", title: "Micanopy Fall Festival", description: "Micanopy's biggest annual event features over 200 vendors with arts, crafts, food, and live music along Cholokka Boulevard.", nextDate: "October 25-26, 2025 (50th Anniversary)" },
+    { month: "July", title: "Independence Day Celebration", description: "Annual 4th of July festivities with community events, food vendors, and evening fireworks.", nextDate: "July 4, 2025" },
+    { month: "Monthly", title: "Library: Craft 'n' Quilt", description: "Monthly gathering at the Micanopy Library where community members share crafting and quilting projects and techniques.", nextDate: "First Tuesday of every month" },
+    { month: "Quarterly", title: "Rabbits in the Library!", description: "Children's event at the Micanopy Library featuring storytelling and an educational presentation with live rabbits.", nextDate: "March 15, 2025" }, 
+    { month: "Monthly", title: "Recycling Day", description: "Community recycling collection held at the town hall parking lot with educational displays about sustainability.", nextDate: "Last Saturday of every month" },
+    { month: "Weekly", title: "Historic Walking Tour", description: "Guided walking tour of historic Micanopy, starting at the Historical Museum and covering significant landmarks in town.", nextDate: "Every Saturday at 10 AM" },
+    { month: "December", title: "Holiday Festival of Lights", description: "Downtown Micanopy transforms with festive lights, decorations, and special shopping hours at local shops.", nextDate: "December 5-20, 2025" },
+    { month: "Spring", title: "Antique Fair & Market", description: "Special event celebrating Micanopy's reputation as the antiques capital of Florida with vendors, appraisals, and workshops.", nextDate: "May 8-9, 2025" },
+];
+
 
 const Timeline = () => {
   const [showMore, setShowMore] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState<boolean>(false); 
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
 
+  // Filter visible timeline events
+  const visibleTimelineEvents = showMore ? timelineEvents : timelineEvents.filter(event => !event.hidden);
+
+  // Reusable Vintage Separator Component (Should be imported from shared location)
+  const VintageSeparator = ({ className = "" }) => (
+    <div className={`flex items-center justify-center py-4 ${className}`}>
+      <div className="w-24 h-1 bg-amber-200 mx-4"></div>
+      <div className="text-amber-200 text-3xl font-serif">⚜</div>
+      <div className="w-24 h-1 bg-amber-200 mx-4"></div>
+    </div>
+  );
+
+  // Reusable Vintage Card Component
+  const VintageInfoCard = ({ title, subTitle, children, className = "" }: { title: string, subTitle: string, children: React.ReactNode, className?: string }) => (
+    <div
+        className={`bg-white border-2 border-amber-300 overflow-hidden shadow-md hover:shadow-lg hover:border-amber-400 transition-all duration-300 group ${className}`}
+    >
+      <div className="p-5 sm:p-6 relative">
+        <div className="absolute -top-1 -right-1 w-4 h-4 border-r-2 border-t-2 border-amber-400 opacity-60"></div>
+        <div className="absolute -bottom-1 -left-1 w-4 h-4 border-l-2 border-b-2 border-amber-400 opacity-60"></div>
+
+        <p className="text-sm font-semibold text-amber-700 font-serif mb-1 uppercase tracking-wider">{subTitle}</p>
+        <h3 className="text-xl sm:text-2xl font-serif font-bold text-amber-900 mb-2">{title}</h3> {/* Increased size */}
+        <div className="text-base text-amber-800 font-serif">{children}</div>
+      </div>
+    </div>
+  );
+
+
   return (
-    <div className="flex justify-center px-4 pt-24 pb-10 bg-amber-50 min-h-screen">
-      <div className="w-full max-w-full lg:max-w-6xl">
-        <h2 className="text-3xl font-serif font-bold mb-10 text-center text-amber-900">
-          Micanopy Timeline
-        </h2>
-        <div className="relative border-l-2 border-amber-300 pl-6 max-w-3xl mx-auto">
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1539</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Micanopy is Discovered
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                Spanish explorers find a village in modern day Micanopy
-                inhabited by the Potano tribe.
-              </CardContent>
-            </Card>
-          </div>
+    <div className="flex flex-col bg-amber-50 min-h-screen">
+      <div className="flex-grow w-full px-4 pt-24 pb-10 flex flex-col items-center">
 
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1821</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Micanopy is Founded
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                Micanopy became the first US town formed in the newly acquired
-                territory of Florida.
-              </CardContent>
-            </Card>
-          </div>
+        <h1 className="text-4xl font-serif font-bold mb-6 text-amber-900 text-center" style={{ textShadow: "1px 1px 2px rgba(120,53,15,0.2)" }}>
+           Micanopy Timeline 
+        </h1>
+        <div className="w-40 h-1 bg-amber-800 mx-auto mb-6"></div>
+        <p className="text-xl text-amber-800 font-serif max-w-3xl mx-auto text-center mb-10">
+            Tracing the milestones of Florida's oldest inland town.
+        </p>
 
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1835</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Second Seminole War
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                Fort Defiance and Fort Micanopy became major strategic
-                objectives of the Second Seminole War and many bloody battles
-                occured in the region.
-              </CardContent>
-            </Card>
-          </div>
+        <VintageSeparator className="mb-16" />
 
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1883</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Micanopy gets a Railroad
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                Florida Southern Railway built a railroad connecting Micanopy to
-                the nearby city Ocala.
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1920</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Cars come to Micanopy
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                The Micanopy Causeway was built which allowed cars to cross
-                Paynes Prairie for the first time.
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1930</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Montgomery Mansion Burns Down
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                The historic Montgomery home, one of the finest residences in Micanopy
-                surrounded by orange groves, was destroyed by fire.
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1950s</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Railroad Service Ends
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                The Thrasher Warehouse, built in 1896, was served by a branch of the Atlantic 
-                Coast Line Railroad until the 1950s when rail service to Micanopy ended.
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mb-10 relative">
-            <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-            <Card className="bg-amber-100 border-amber-200 rounded-none">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">1983</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Historic District Created
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                The downtown Micanopy Historic District was listed on the National Register 
-                of Historic Places, recognizing the town's historical significance.
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* This is where we start hiding events until "See More" is clicked */}
-          {showMore && (
-            <>
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">1991</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Hollywood Comes to Town
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    The movie "Doc Hollywood" starring Michael J. Fox was filmed in Micanopy, 
-                    bringing national attention to the charming small town.
-                  </CardContent>
-                </Card>
+        {/* Timeline */}
+        <div className="relative w-full max-w-3xl mx-auto border-l-4 border-amber-300 pl-8"> 
+          {visibleTimelineEvents.map((event, index) => (
+            <div key={index} className="mb-12 relative">
+              <div className="absolute w-5 h-5 bg-amber-100 border-2 border-amber-800 rounded-full -left-[48px] top-8 flex items-center justify-center">
+                 <div className="w-2 h-2 bg-amber-800 rounded-full"></div> 
               </div>
+              <VintageInfoCard title={event.title} subTitle={event.year}>
+                 <p>{event.description}</p>
+              </VintageInfoCard>
+            </div>
+          ))}
 
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">2021</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Bicentennial Celebration
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    Micanopy celebrated its 200th anniversary as Florida's oldest inland 
-                    town that has been continuously inhabited.
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">2023</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Recognition as a Top Historic Town
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    Micanopy was recognized as one of America's Top 10 Historic Small Towns, 
-                    highlighting its preservation of Old Florida charm and character.
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">October 2024</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Annual Fall Festival
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    Micanopy hosted its annual Fall Festival featuring over 200 vendors
-                    offering arts, crafts, antiques, plants, and foods, attracting 
-                    thousands of visitors to the historic town.
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">2024</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Museum Expansion
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    The Micanopy Historical Society Museum expanded its collection with 
-                    new exhibits showcasing artifacts from local Native tribes and 
-                    significant events from the town's rich past.
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mb-10 relative">
-                <div className="absolute w-3 h-3 bg-amber-800 -left-[7px] top-1/2 -translate-y-1/2 rounded-full"></div>
-                <Card className="bg-amber-100 border-amber-200 rounded-none">
-                  <CardHeader className="pb-2">
-                    <p className="text-sm text-amber-700 font-serif">2025</p>
-                    <CardTitle className="text-xl font-serif text-amber-900">
-                      Preservation Initiative
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-amber-800">
-                    The town launched a comprehensive initiative to preserve its historic
-                    buildings and enhance the downtown area while maintaining its 
-                    distinctive Old Florida atmosphere and charm.
-                  </CardContent>
-                </Card>
-              </div>
-            </>
+          {/* Shoe More / Fewer */}
+          {timelineEvents.some(e => e.hidden) && ( 
+            <div className="flex justify-center mt-8 mb-4">
+              <button
+                onClick={toggleShowMore}
+                className="px-8 py-3 bg-amber-800 text-amber-100 border-2 border-double border-amber-200 rounded-none hover:bg-amber-700 transition-colors text-base font-serif uppercase tracking-widest shadow-md hover:shadow-lg"
+              >
+                {showMore ? "Show Fewer Milestones" : "Show More Milestones"}
+              </button>
+            </div>
           )}
-          
-          {/* See More / See Less button */}
-          <div className="flex justify-center mt-4 mb-4">
-            <button
-              onClick={toggleShowMore}
-              className="bg-amber-600 hover:bg-amber-700 text-white py-2 px-6 rounded-full font-serif transition-all duration-300 flex items-center"
-            >
-              {showMore ? (
-                <>
-                  <span className="mr-1">See Less</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-                  </svg>
-                </>
-              ) : (
-                <>
-                  <span className="mr-1">See More</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </>
-              )}
-            </button>
+
+          {/* Wiki Link  */}
+          <div className="mt-8 mb-12 text-center">
+             <a
+               href="https://en.wikipedia.org/wiki/Micanopy,_Florida" 
+               target="_blank"
+               rel="noopener noreferrer"
+               className="inline-block px-4 py-1 border-b-2 border-amber-400 text-amber-800 hover:text-amber-600 hover:border-amber-600 transition-colors font-serif"
+             >
+               Learn More (Wikipedia)
+             </a>
           </div>
-          
-          {/* Source button moved here */}
-          <div className="mt-4 mb-8 text-center">
-            <a
-              href="https://en.wikipedia.org/wiki/Micanopy,_Florida#Education"
-              target="_blank"
-              className="text-amber-700 hover:text-amber-800 font-serif"
-            >
-              SOURCE
-            </a>
-          </div>
-        </div>
-        
-        {/* Annual Events Section */}
-        <div className="mt-16 mb-10">
-          <h2 className="text-3xl font-serif font-bold mb-8 text-center text-amber-900">
-            Annual & Upcoming Events
+        </div> 
+
+        {/* Events Section */}
+        <div className="w-full max-w-7xl mx-auto mt-16 mb-10 px-4"> 
+
+          <VintageSeparator className="mb-10"/>
+          <h2 className="text-4xl font-serif font-bold mb-6 text-amber-900 text-center" style={{ textShadow: "1px 1px 2px rgba(120,53,15,0.2)" }}>
+             Annual & Upcoming Events
           </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">October</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Micanopy Fall Festival
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Micanopy's biggest annual event features over 200 vendors with arts, crafts, food, and live music along Cholokka Boulevard.</p>
-                <p className="font-bold">Next Date: October 25-26, 2025 (50th Anniversary)</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">July</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Independence Day Celebration
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Annual 4th of July festivities with community events, food vendors, and evening fireworks.</p>
-                <p className="font-bold">Next Date: July 4, 2025</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">Monthly</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Library: Craft 'n' Quilt
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Monthly gathering at the Micanopy Library where community members share crafting and quilting projects and techniques.</p>
-                <p className="font-bold">Dates: First Tuesday of every month</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">Quarterly</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Rabbits in the Library!
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Children's event at the Micanopy Library featuring storytelling and an educational presentation with live rabbits.</p>
-                <p className="font-bold">Next Date: March 15, 2025</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">Monthly</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Recycling Day
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Community recycling collection held at the town hall parking lot with educational displays about sustainability.</p>
-                <p className="font-bold">Dates: Last Saturday of every month</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">Weekly</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Historic Walking Tour
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Guided walking tour of historic Micanopy, starting at the Historical Museum and covering significant landmarks in town.</p>
-                <p className="font-bold">Dates: Every Saturday at 10 AM</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">December</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Holiday Festival of Lights
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Downtown Micanopy transforms with festive lights, decorations, and special shopping hours at local shops.</p>
-                <p className="font-bold">Next Date: December 5-20, 2025</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-amber-100 border-amber-200">
-              <CardHeader className="pb-2">
-                <p className="text-sm text-amber-700 font-serif">Spring</p>
-                <CardTitle className="text-xl font-serif text-amber-900">
-                  Antique Fair & Market
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-amber-800">
-                <p className="mb-2">Special event celebrating Micanopy's reputation as the antiques capital of Florida with vendors, appraisals, and workshops.</p>
-                <p className="font-bold">Next Date: May 8-9, 2025</p>
-              </CardContent>
-            </Card>
+           <div className="w-40 h-1 bg-amber-800 mx-auto mb-12"></div>
+
+          {/* Events Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
+             {annualEvents.map((event, index) => (
+                 <VintageInfoCard key={index} title={event.title} subTitle={event.month} className="flex flex-col">
+                    <div className="flex flex-col flex-grow">
+                        <p className="mb-4 flex-grow">{event.description}</p>
+                        <p className="font-semibold text-amber-700 mt-auto pt-2 border-t border-amber-200">
+                            Next: {event.nextDate}
+                        </p>
+                    </div>
+                 </VintageInfoCard>
+             ))}
           </div>
         </div>
       </div>
+
+      <div className="h-16 bg-amber-800 flex items-center justify-center mt-auto w-full">
+        <VintageSeparator />
+      </div>
+
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-amber-800 text-amber-100 p-3 border-2 border-double border-amber-300 shadow-lg z-50 hover:bg-amber-700 transition-colors"
+          aria-label="Back to top"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          </svg>
+          <span className="text-xs font-serif tracking-wide block leading-none">TOP</span>
+        </button>
+      )}
     </div>
   );
 };

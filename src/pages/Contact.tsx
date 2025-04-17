@@ -1,14 +1,7 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { submitContactForm } from "@/lib/api";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,35 +16,38 @@ function Contact() {
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState<boolean>(false); 
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Form validation logic
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      errors.name = "Name is required";
-    }
+    if (!formData.name.trim()) errors.name = "Name is required";
     if (!formData.email.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = "Please enter a valid email address";
     }
-    if (!formData.subject.trim()) {
-      errors.subject = "Subject is required";
-    }
-    if (!formData.message.trim()) {
-      errors.message = "Message is required";
-    }
-
+    if (!formData.subject.trim()) errors.subject = "Subject is required";
+    if (!formData.message.trim()) errors.message = "Message is required";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
+  // Input change handler
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-    // Clear error when user starts typing
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (formErrors[field]) {
       setFormErrors((prev) => {
         const newErrors = { ...prev };
@@ -61,35 +57,22 @@ function Contact() {
     }
   };
 
+  // Form submission logic
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
+    if (!validateForm()) return;
     setIsLoading(true);
-
     try {
       await submitContactForm(formData);
-
       toast.success("Message sent successfully! We'll get back to you soon.", {
-        className:
-          "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+        className: "bg-amber-100 text-amber-900 border border-amber-300 font-serif", 
         duration: 4000,
       });
-
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", subject: "", message: "" });
       setFormErrors({});
     } catch (error) {
       toast.error("Failed to send message. Please try again later.", {
-        className:
-          "bg-amber-100 text-amber-900 border border-amber-300 font-serif",
+        className: "bg-amber-100 text-amber-900 border border-amber-300 font-serif", 
         duration: 4000,
       });
       console.error(error);
@@ -98,110 +81,140 @@ function Contact() {
     }
   };
 
+  const VintageSeparator = ({ className = "" }: { className?: string }) => (
+    <div className={`flex items-center justify-center py-4 ${className}`}>
+      <div className="w-24 h-1 bg-amber-200 mx-4"></div>
+      <div className="text-amber-200 text-3xl font-serif">⚜</div>
+      <div className="w-24 h-1 bg-amber-200 mx-4"></div>
+    </div>
+  );
+
   return (
-    <div className="bg-amber-50 min-h-screen relative">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="h-full w-full bg-[linear-gradient(45deg,#f3d5b5_10%,transparent_10%,transparent_90%,#f3d5b5_90%)] bg-[size:20px_20px]"></div>
-      </div>
-      <div className="max-w-2xl mx-auto px-4 relative py-20">
-        <div className="text-center my-12">
-          <h1 className="text-4xl font-serif text-amber-900 mb-4">
-            Contact Us
-          </h1>
-          <div className="w-24 h-1 bg-amber-800 mx-auto"></div>
+    <div className="flex flex-col bg-amber-50 min-h-screen">
+      <div className="flex-grow w-full px-4 pt-24 pb-10 flex flex-col items-center">
+        <h1 className="text-4xl font-serif font-bold mb-6 text-amber-900 text-center" style={{ textShadow: "1px 1px 2px rgba(120,53,15,0.2)" }}>
+           Contact Us
+        </h1>
+        <div className="w-40 h-1 bg-amber-800 mx-auto mb-6"></div>
+        <p className="text-xl text-amber-800 font-serif max-w-3xl mx-auto text-center mb-10">
+            Have questions or want to contribute? Send us a message!
+        </p>
+        <VintageSeparator className="mb-12" />
+
+        {/* Form */}
+        <div className="w-full max-w-2xl">
+            <div
+                className="bg-white border-2 border-amber-300 overflow-hidden shadow-lg group"
+            >
+                <div className="p-6 sm:p-8 relative">
+                    <div className="absolute -top-1 -right-1 w-4 h-4 border-r-2 border-t-2 border-amber-400 opacity-60"></div>
+                    <div className="absolute -bottom-1 -left-1 w-4 h-4 border-l-2 border-b-2 border-amber-400 opacity-60"></div>
+
+                    <div className="mb-6 text-center border-b border-amber-200 pb-4">
+                        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-900 mb-2">
+                            Send us a message
+                        </h2>
+                        <p className="text-amber-800 font-serif text-sm sm:text-base">
+                            We'd love to hear from you! Please fill out the form below.
+                        </p>
+                    </div>
+
+                    {/* Form */}
+                    <form onSubmit={handleFormSubmit} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="name" className="text-amber-900 font-serif font-semibold">
+                                    Name <span className="text-red-600">*</span>
+                                </Label>
+                                <Input
+                                    id="name"
+                                    value={formData.name}
+                                    onChange={(e) => handleInputChange("name", e.target.value)}
+                                    className={`bg-amber-50/80 border-amber-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-400 rounded-none ${formErrors.name ? "border-red-500" : ""}`}
+                                    aria-invalid={!!formErrors.name}
+                                    aria-describedby={formErrors.name ? "name-error" : undefined}
+                                />
+                                {formErrors.name && (<p id="name-error" className="text-red-600 text-sm font-serif">{formErrors.name}</p>)}
+                            </div>
+                            {/* Email Input */}
+                            <div className="space-y-2">
+                                <Label htmlFor="email" className="text-amber-900 font-serif font-semibold">
+                                    Email <span className="text-red-600">*</span>
+                                </Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={(e) => handleInputChange("email", e.target.value)}
+                                    className={`bg-amber-50/80 border-amber-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-400 rounded-none ${formErrors.email ? "border-red-500" : ""}`}
+                                    aria-invalid={!!formErrors.email}
+                                    aria-describedby={formErrors.email ? "email-error" : undefined}
+                                />
+                                {formErrors.email && (<p id="email-error" className="text-red-600 text-sm font-serif">{formErrors.email}</p>)}
+                            </div>
+                        </div>
+                        {/* Subject Input */}
+                        <div className="space-y-2">
+                            <Label htmlFor="subject" className="text-amber-900 font-serif font-semibold">
+                                Subject <span className="text-red-600">*</span>
+                            </Label>
+                            <Input
+                                id="subject"
+                                value={formData.subject}
+                                onChange={(e) => handleInputChange("subject", e.target.value)}
+                                className={`bg-amber-50/80 border-amber-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-400 rounded-none ${formErrors.subject ? "border-red-500" : ""}`}
+                                aria-invalid={!!formErrors.subject}
+                                aria-describedby={formErrors.subject ? "subject-error" : undefined}
+                            />
+                            {formErrors.subject && (<p id="subject-error" className="text-red-600 text-sm font-serif">{formErrors.subject}</p>)}
+                        </div>
+                        {/* Message Input */}
+                        <div className="space-y-2">
+                            <Label htmlFor="message" className="text-amber-900 font-serif font-semibold">
+                                Message <span className="text-red-600">*</span>
+                            </Label>
+                            <Textarea
+                                id="message"
+                                value={formData.message}
+                                onChange={(e) => handleInputChange("message", e.target.value)}
+                                rows={5}
+                                className={`bg-amber-50/80 border-amber-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-400 rounded-none ${formErrors.message ? "border-red-500" : ""}`}
+                                aria-invalid={!!formErrors.message}
+                                aria-describedby={formErrors.message ? "message-error" : undefined}
+                            />
+                            {formErrors.message && (<p id="message-error" className="text-red-600 text-sm font-serif">{formErrors.message}</p>)}
+                        </div>
+                        {/* Submit Button */}
+                        <Button
+                            type="submit"
+                            className="w-full mt-4 px-8 py-3 bg-amber-800 text-amber-100 border-2 border-double border-amber-200 rounded-none hover:bg-amber-700 transition-colors text-base font-serif uppercase tracking-widest shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Sending..." : "Send Message"}
+                        </Button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <Card className="bg-amber-100 border-amber-300 shadow-lg rounded-none">
-          <CardHeader className="border-b border-amber-300">
-            <CardTitle className="text-2xl font-serif text-amber-900">
-              Send us a message
-            </CardTitle>
-            <CardDescription className="text-amber-900 font-serif">
-              We'd love to hear from you! Please fill out the form below to
-              contact us.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <form onSubmit={handleFormSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-amber-900 font-serif">
-                    Name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
-                      formErrors.name ? "border-red-500" : ""
-                    }`}
-                  />
-                  {formErrors.name && (
-                    <p className="text-red-500 text-sm">{formErrors.name}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-amber-900 font-serif">
-                    Email <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
-                      formErrors.email ? "border-red-500" : ""
-                    }`}
-                  />
-                  {formErrors.email && (
-                    <p className="text-red-500 text-sm">{formErrors.email}</p>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject" className="text-amber-900 font-serif">
-                  Subject <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  id="subject"
-                  value={formData.subject}
-                  onChange={(e) => handleInputChange("subject", e.target.value)}
-                  className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
-                    formErrors.subject ? "border-red-500" : ""
-                  }`}
-                />
-                {formErrors.subject && (
-                  <p className="text-red-500 text-sm">{formErrors.subject}</p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message" className="text-amber-900 font-serif">
-                  Message <span className="text-red-500">*</span>
-                </Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => handleInputChange("message", e.target.value)}
-                  rows={5}
-                  className={`bg-amber-50 border-amber-300 focus:border-amber-500 focus:ring-amber-500 rounded-none ${
-                    formErrors.message ? "border-red-500" : ""
-                  }`}
-                />
-                {formErrors.message && (
-                  <p className="text-red-500 text-sm">{formErrors.message}</p>
-                )}
-              </div>
-              <Button
-                type="submit"
-                className="w-full bg-amber-800 text-amber-100 hover:bg-amber-700 border border-amber-700 font-serif text-lg uppercase tracking-widest"
-                disabled={isLoading}
-              >
-                {isLoading ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+
       </div>
+
+      <div className="h-16 bg-amber-800 flex items-center justify-center mt-auto w-full">
+        <VintageSeparator />
+      </div>
+
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-amber-800 text-amber-100 p-3 border-2 border-double border-amber-300 shadow-lg z-50 hover:bg-amber-700 transition-colors"
+          aria-label="Back to top"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          </svg>
+          <span className="text-xs font-serif tracking-wide block leading-none">TOP</span>
+        </button>
+      )}
     </div>
   );
 }
