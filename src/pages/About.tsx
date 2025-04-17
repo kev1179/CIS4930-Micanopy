@@ -4,6 +4,7 @@ import townPhoto from "@/assets/images/town-photo.jpg";
 import herlongMansion from "@/assets/images/herlong-mansion.png";
 
 import tyler from "@/assets/headshots/tylerlandtroop.jpeg";
+import randol from "@/assets/headshots/randolrecio.jpg"
 
 const About = () => {
   return (
@@ -129,7 +130,12 @@ const About = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 justify-items-center">
                   <div className="text-center">
-                    <div className="w-32 h-32 bg-amber-200 mb-4 mx-auto rounded-full"></div>
+                    <img
+                      src={randol}
+                      alt="Randol Recio"
+                      className="w-32 h-32 mb-4 mx-auto rounded-full object-cover"
+                      style={{ imageRendering: "auto", transform: "scale(1)", width: "8rem", height: "8rem" }}
+                      />
                     <h3 className="font-serif text-amber-900 font-semibold">
                       Randol Recio
                     </h3>
