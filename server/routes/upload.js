@@ -112,10 +112,14 @@ router.post("/uploadPhotos", upload.any("files", 5), async (req, res) => {
 router.post("/approveImage", async (req, res) => {
     try {
       const { id } = req.body;
+      const userid = req.user.id;
 
-      const [insertApproved, removePending] = await Promise.all([
+      const timestamp = new Date().getTime();
+
+      const [insertApproved, removePending, operation] = await Promise.all([
         pool.query('INSERT INTO accepted (ID) VALUES (?)', [id]),
         pool.query('DELETE FROM pending WHERE ID = ?', [id]),
+        pool.query('INSERT INTO operations (userid, Kind, Timestamp) VALUES (?, ?, ?)', [userid, "Approve", timestamp]),
       ]);
 
       const [imageNames] = await pool.query('SELECT Photos FROM gallery_entry WHERE ID=?', [id]);
@@ -149,9 +153,13 @@ router.post("/approveImage", async (req, res) => {
 router.post("/rejectImage", async (req, res) => {
   try {
     const { id } = req.body;
+    const userid = req.user.id;
 
+    const timestamp = new Date().getTime();
+    
     const [removePending] = await Promise.all([
       pool.query('DELETE FROM pending WHERE ID = ?', [id]),
+      pool.query('INSERT INTO operations (userid, Kind, Timestamp) VALUES (?, ?, ?)', [userid, "Reject", timestamp])
     ]);
 
     const [imageNames] = await pool.query('SELECT Photos FROM gallery_entry WHERE ID=?', [id]);

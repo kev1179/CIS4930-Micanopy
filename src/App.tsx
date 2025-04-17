@@ -7,6 +7,8 @@ import Contact from "./pages/Contact";
 import Submit from "./pages/Submit";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="submit" element={<Submit />} />
-        <Route path="admin" element={<Admin />} />
+        <Route element={<PrivateRoute/>}>
+          <Route path="admin" element={<Admin />} />
+        </Route>
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   );
