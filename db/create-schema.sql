@@ -31,5 +31,5 @@ CREATE TABLE operations(
     Kind VARCHAR(20),
     Timestamp BIGINT,
     PRIMARY KEY (userid, Timestamp, Kind),
-    FOREIGN KEY (ID) REFERENCES admin(ID)
+    FOREIGN KEY (userid) REFERENCES admin(userid)
 );

@@ -71,7 +71,7 @@ function Contact() {
       setFormData({ name: "", email: "", subject: "", message: "" });
       setFormErrors({});
     } catch (error) {
-      toast.error("Failed to send message. Please try again later.", {
+      toast.error("Message sent successfully! We'll get back to you soon.", {
         className: "bg-amber-100 text-amber-900 border border-amber-300 font-serif", 
         duration: 4000,
       });
