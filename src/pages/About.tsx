@@ -6,6 +6,7 @@ import herlongMansion from "@/assets/images/herlong-mansion.png";
 import tyler from "@/assets/headshots/tylerlandtroop.jpeg";
 import maiah from "@/assets/headshots/maiah_jaffa_headshot.jpg";
 import randol from "@/assets/headshots/randolrecio.jpg";
+import aily from "@/assets/headshots/aily_headshot.jpg";
 
 
 const About = () => {
@@ -190,7 +191,7 @@ const About = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-10 justify-items-center">
                   <TeamMember name="Randol Recio" role="Software Engineer" imgSrc={randol}/>
                   <TeamMember name="Tyler Landtroop" role="Software Engineer" imgSrc={tyler} />
-                  <TeamMember name="Ai-Ly Mai" role="Software Engineer" />
+                  <TeamMember name="Ai-Ly Mai" role="Software Engineer" imgSrc={aily} />
                   <TeamMember name="Maiah Jaffa" role="Software Engineer" imgSrc={maiah} />
                   <TeamMember name="Kevin Mosley" role="Software Engineer" />
                 </div>
