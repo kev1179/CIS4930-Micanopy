@@ -64,6 +64,13 @@ async function generateUniqueEntryID() {
     return userId;
 }
 
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ error: 'Unauthorized' });
+};
+
 // Assumes frontend takes care of filename.
 router.post("/uploadPhotos", upload.any("files", 5), async (req, res) => {
   try {
@@ -109,7 +116,7 @@ router.post("/uploadPhotos", upload.any("files", 5), async (req, res) => {
   }
 });
 
-router.post("/approveImage", async (req, res) => {
+router.post("/approveImage", isAuthenticated, async (req, res) => {
     try {
       const { id } = req.body;
       const userid = req.user.id;
@@ -150,13 +157,13 @@ router.post("/approveImage", async (req, res) => {
     }
   });
 
-router.post("/rejectImage", async (req, res) => {
+router.post("/rejectImage", isAuthenticated, async (req, res) => {
   try {
     const { id } = req.body;
     const userid = req.user.id;
 
     const timestamp = new Date().getTime();
-    
+
     const [removePending] = await Promise.all([
       pool.query('DELETE FROM pending WHERE ID = ?', [id]),
       pool.query('INSERT INTO operations (userid, Kind, Timestamp) VALUES (?, ?, ?)', [userid, "Reject", timestamp])
@@ -189,7 +196,7 @@ router.post("/rejectImage", async (req, res) => {
   }
 });
 
-router.get("/getPendingIDs", async (req, res) => {
+router.get("/getPendingIDs", isAuthenticated, async (req, res) => {
   try {
 
     const [getPending] = await Promise.all([
@@ -220,7 +227,7 @@ router.get("/getAcceptedIDs", async (req, res) => {
   }
 });
 
-router.get("/getPendingInfo", async (req, res) => {
+router.get("/getPendingInfo", isAuthenticated, async (req, res) => {
   try {
 
     const [getPendingData] = await Promise.all([
