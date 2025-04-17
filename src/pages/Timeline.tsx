@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"; 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; 
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; 
 
 const timelineEvents = [
   { year: "1539", title: "Micanopy is Discovered", description: "Spanish explorers find a village in modern day Micanopy inhabited by the Potano tribe." },
