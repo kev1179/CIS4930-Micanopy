@@ -7,7 +7,7 @@ import tyler from "@/assets/headshots/tylerlandtroop.jpeg";
 import maiah from "@/assets/headshots/maiah_jaffa_headshot.jpg";
 import randol from "@/assets/headshots/randolrecio.jpg";
 import aily from "@/assets/headshots/aily_headshot.jpg";
-
+import kevin from "@/assets/headshots/kevin_headshot.jpeg";
 
 const About = () => {
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
@@ -193,7 +193,7 @@ const About = () => {
                   <TeamMember name="Tyler Landtroop" role="Software Engineer" imgSrc={tyler} />
                   <TeamMember name="Ai-Ly Mai" role="Software Engineer" imgSrc={aily} />
                   <TeamMember name="Maiah Jaffa" role="Software Engineer" imgSrc={maiah} />
-                  <TeamMember name="Kevin Mosley" role="Software Engineer" />
+                  <TeamMember name="Kevin Mosley" role="Software Engineer" imgSrc={kevin}/>
                 </div>
              </VintageInfoCard>
           </section>
